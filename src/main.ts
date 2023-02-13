@@ -1,7 +1,7 @@
 import "./style.css";
 import typescriptLogo from "./typescript.svg";
 import { setupCounter } from "./counter";
-import './bases/03-classes'
+import './bases/06-decorators'
 
 
 document.querySelector<HTMLDivElement>("#app")!.innerHTML = `
