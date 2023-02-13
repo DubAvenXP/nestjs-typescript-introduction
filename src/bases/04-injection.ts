@@ -1,9 +1,8 @@
-import axios from "axios";
 import {
     Move,
     PokeAPIResponse,
 } from "../interfaces/pokeapi-response.interface";
-import { PokeApiAdapter } from "../api/pokeApi.adapter";
+import { HttpAdapter, PokeApiAdapter, PokeApiFetchAdapter } from "../api/pokeApi.adapter";
 
 export class Pokemon {
     public readonly id: number;
@@ -21,7 +20,7 @@ export class Pokemon {
         public defense: number,
         public speed: number,
         public type: string,
-        private readonly http: PokeApiAdapter
+        private readonly http: HttpAdapter
     ) {
         this.id = 4;
     }
@@ -35,10 +34,13 @@ export class Pokemon {
     }
 
     async getMoves(): Promise<Move[]> {
-        const data = await this.http.get(`https://pokeapi.co/api/v2/pokemon/${this.id}`);
+        const data = await this.http.get<PokeAPIResponse>(`https://pokeapi.co/api/v2/pokemon/${this.id}`);
         return data.moves;
     }
 }
 
 const pokeApiAdapter = new PokeApiAdapter();
+const pokeApiFetchAdapter = new PokeApiFetchAdapter();
+
 export const charmander = new Pokemon("Charmander", 39, 52, 43, 65, "Fire", pokeApiAdapter);
+export const charmanderFetch = new Pokemon("Charmander", 39, 52, 43, 65, "Fire", pokeApiFetchAdapter);
